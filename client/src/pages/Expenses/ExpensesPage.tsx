@@ -21,9 +21,9 @@ const DEFAULT_FILTERS: ExpenseFiltersState = {
   sortOrder: 'desc',
 };
 
-const pageHeaderClass = 'flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-6';
-const titleClass = 'text-2xl font-bold text-gray-900 dark:text-white';
-const subtitleClass = 'text-gray-500 dark:text-gray-400 text-sm mt-1';
+const pageHeaderClass = 'flex items-center justify-between gap-3 mb-6';
+const titleClass = 'text-lg sm:text-2xl font-bold text-gray-900 dark:text-white leading-tight';
+const subtitleClass = 'hidden sm:block text-gray-500 dark:text-gray-400 text-sm mt-1';
 const stackClass = 'space-y-4';
 
 const ExpensesPage = () => {
@@ -84,7 +84,9 @@ const ExpensesPage = () => {
           <h1 className={titleClass}>Expenses</h1>
           <p className={subtitleClass}>{data?.total ?? 0} total expenses</p>
         </div>
-        <Button leftIcon={<Plus size={16} />} onClick={handleOpenAdd}>Add Expense</Button>
+        <Button leftIcon={<Plus size={16} />} onClick={handleOpenAdd}>
+          <span className="hidden sm:inline">Add Expense</span>
+        </Button>
       </div>
 
       <div className={stackClass}>

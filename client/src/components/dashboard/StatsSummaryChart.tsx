@@ -7,9 +7,10 @@ interface StatsSummaryChartProps {
   summary: DashboardSummary;
 }
 
-const cardClass = 'bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-3 flex flex-col';
+const cardClass = 'bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-3';
 const titleClass = 'text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-2';
-const chartWrapperClass = 'relative flex-1';
+const chartWrapperClass = 'relative w-full';
+const chartHeight = 120;
 const centerLabelClass = 'absolute inset-0 flex flex-col items-center justify-center pointer-events-none';
 const totalLabelClass = 'text-xs font-bold text-gray-900 dark:text-white leading-tight text-center';
 const totalSubClass = 'text-[10px] text-gray-400 dark:text-gray-500 mt-0.5';
@@ -64,8 +65,8 @@ export const StatsSummaryChart = memo<StatsSummaryChartProps>(({ summary }) => {
   return (
     <div className={cardClass}>
       <p className={titleClass}>Overview</p>
-      <div className={chartWrapperClass} style={{ height: 120 }}>
-        <ResponsiveContainer width="100%" height="100%">
+      <div className={chartWrapperClass} style={{ height: chartHeight }}>
+        <ResponsiveContainer width="100%" height={chartHeight}>
           <PieChart>
             <Pie
               data={chartData}

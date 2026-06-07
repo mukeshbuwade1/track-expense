@@ -78,7 +78,7 @@ const DashboardPage = () => {
           </p>
         </div>
         <Button leftIcon={<Plus size={16} />} onClick={handleOpenModal}>
-          Add Expense
+          <span className="hidden sm:inline">Add Expense</span>
         </Button>
       </div>
 

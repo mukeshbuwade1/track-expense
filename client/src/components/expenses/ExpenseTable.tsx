@@ -48,10 +48,10 @@ export const ExpenseTable = memo<ExpenseTableProps>(({ expenses, isLoading, onEd
           <thead className={theadClass}>
             <tr>
               <th className={thClass}>Title</th>
-              <th className={thClass}>Category</th>
+              <th className={`${thClass} hidden lg:table-cell`}>Category</th>
               <th className={thClass}>Amount</th>
-              <th className={thClass}>Date</th>
-              <th className={thClass}>Actions</th>
+              <th className={`${thClass} hidden sm:table-cell`}>Date</th>
+              <th className={`${thClass} w-px whitespace-nowrap text-center`}>Actions</th>
             </tr>
           </thead>
           <tbody>

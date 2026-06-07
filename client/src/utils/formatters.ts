@@ -11,6 +11,18 @@ export const formatMonthYear = (year: number, month: number): string => {
   return new Intl.DateTimeFormat('en-IN', { month: 'short', year: '2-digit' }).format(date);
 };
 
+export const formatRelativeDate = (dateStr: string): string => {
+  const input = new Date(dateStr);
+  const today = new Date();
+  const inputDay = new Date(input.getFullYear(), input.getMonth(), input.getDate());
+  const todayDay = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+  const diff = Math.round((inputDay.getTime() - todayDay.getTime()) / 86400000);
+  if (diff === 0) return 'Today';
+  if (diff === -1) return 'Yesterday';
+  if (diff === 1) return 'Tomorrow';
+  return formatDate(dateStr);
+};
+
 export const toInputDateValue = (dateStr: string): string => {
   const d = new Date(dateStr);
   const yyyy = d.getFullYear();

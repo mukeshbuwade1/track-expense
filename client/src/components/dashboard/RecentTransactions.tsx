@@ -1,8 +1,9 @@
-import React, { memo } from 'react';
+import { memo } from 'react';
 import { Link } from 'react-router-dom';
 import { Badge } from '@/components/common/Badge';
+import { getCategoryMeta } from '@/constants/categories';
 import { Expense } from '@/types/expense.types';
-import { formatCurrency, formatDate } from '@/utils/formatters';
+import { formatCurrency, formatRelativeDate } from '@/utils/formatters';
 import { ROUTES } from '@/constants/routes';
 
 interface RecentTransactionsProps {
@@ -13,11 +14,13 @@ const cardClass = 'bg-white dark:bg-gray-800 rounded-xl border border-gray-200 d
 const headerClass = 'flex items-center justify-between mb-4';
 const titleClass = 'text-base font-semibold text-gray-900 dark:text-white';
 const linkClass = 'text-sm text-primary-600 dark:text-primary-400 hover:underline';
-const rowClass = 'flex items-center justify-between py-2.5 border-b border-gray-100 dark:border-gray-700 last:border-0';
-const leftClass = 'flex items-center gap-3 min-w-0';
-const nameClass = 'text-sm font-medium text-gray-900 dark:text-white truncate';
+const rowClass = 'flex items-center justify-between py-2.5 border-b border-gray-100 dark:border-gray-700 last:border-0 gap-3';
+const leftClass = 'flex items-center gap-2.5 min-w-0 flex-1';
+const iconBoxClass = 'flex-shrink-0 w-8 h-8 rounded-lg flex items-center justify-center';
+const nameClass = 'text-sm font-medium text-gray-900 dark:text-white truncate leading-snug';
 const dateClass = 'text-xs text-gray-500 dark:text-gray-400 mt-0.5';
-const amountClass = 'text-sm font-semibold text-gray-900 dark:text-white whitespace-nowrap ml-3 tabular-nums';
+const rightClass = 'flex items-center gap-2 flex-shrink-0';
+const amountClass = 'text-sm font-semibold text-gray-900 dark:text-white whitespace-nowrap tabular-nums';
 const emptyClass = 'text-center py-8 text-gray-400 dark:text-gray-500 text-sm';
 
 export const RecentTransactions = memo<RecentTransactionsProps>(({ expenses }) => (
@@ -30,20 +33,30 @@ export const RecentTransactions = memo<RecentTransactionsProps>(({ expenses }) =
       <p className={emptyClass}>No transactions yet</p>
     ) : (
       <div>
-        {expenses.slice(0, 5).map((expense) => (
-          <div key={expense._id} className={rowClass}>
-            <div className={leftClass}>
-              <div>
-                <p className={nameClass}>{expense.title}</p>
-                <p className={dateClass}>{formatDate(expense.date)}</p>
+        {expenses.slice(0, 5).map((expense) => {
+          const { Icon: CategoryIcon, color } = getCategoryMeta(expense.category);
+          const iconBoxStyle = { backgroundColor: `${color}18` };
+          const iconStyle = { color };
+          return (
+            <div key={expense._id} className={rowClass}>
+              <div className={leftClass}>
+                <div className={iconBoxClass} style={iconBoxStyle}>
+                  <CategoryIcon size={15} style={iconStyle} />
+                </div>
+                <div className="min-w-0">
+                  <p className={nameClass}>{expense.title}</p>
+                  <p className={dateClass}>{formatRelativeDate(expense.date)}</p>
+                </div>
+              </div>
+              <div className={rightClass}>
+                <div className="hidden sm:block">
+                  <Badge category={expense.category} />
+                </div>
+                <span className={amountClass}>{formatCurrency(expense.amount)}</span>
               </div>
             </div>
-            <div className="flex items-center gap-2">
-              <Badge category={expense.category} />
-              <span className={amountClass}>{formatCurrency(expense.amount)}</span>
-            </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
     )}
   </div>
